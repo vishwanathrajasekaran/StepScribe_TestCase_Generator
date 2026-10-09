@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>TestForge — Automation Code Generator</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#111a2e;--panel2:#0d1527;--line:#26344e;--text:#edf3ff;--muted:#9aabc5;--accent:#7c9cff;--accent2:#52d6b5;--warn:#f6c76a;--danger:#ff8c9a;--radius:16px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 8% 0%,#18274a 0,transparent 35%),var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit}button,select,input,textarea{color:inherit}button{cursor:pointer}
+.app{max-width:1600px;margin:auto;padding:24px clamp(14px,2.5vw,36px) 40px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:13px}.logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#8ca8ff,#54dfc0);display:grid;place-items:center;color:#071126;font-size:22px;font-weight:900;box-shadow:0 8px 28px #6e8cff33}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);font-weight:800}.brand h1{margin:2px 0 0;font-size:20px;letter-spacing:-.035em}.top-actions{display:flex;gap:9px;flex-wrap:wrap}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 22px}.hero h2{font-size:clamp(26px,3.3vw,42px);line-height:1.06;letter-spacing:-.045em;margin:7px 0 10px;max-width:740px}.hero p{margin:0;color:var(--muted);max-width:740px;font-size:14px}.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid #2e4b63;background:#102c35;color:#8ee8d4;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:700;white-space:nowrap}.dot{width:7px;height:7px;background:#52d6b5;border-radius:50%}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:13px;background:#0d1629d9;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px}.field-inline{display:flex;align-items:center;gap:8px}.field-inline label{font-size:12px;color:var(--muted);font-weight:700}.toolbar select{min-width:130px}
+select,input,textarea{background:#0a1222;border:1px solid #2b3b56;border-radius:9px;padding:9px 10px;outline:none;width:100%}select:focus,input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}select{width:auto;min-width:145px}.btn{border:1px solid #34445f;background:#17233a;border-radius:10px;padding:9px 12px;font-weight:750;font-size:12px;transition:background .15s,border-color .15s}.btn:hover{background:#21314e;border-color:#52688e}.btn.primary{background:linear-gradient(135deg,#91aaff,#6d8aff);border-color:transparent;color:#09132b}.btn.primary:hover{filter:brightness(1.08)}.btn.ghost{background:transparent}.btn.small{padding:6px 9px;font-size:11px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.layout{display:grid;grid-template-columns:minmax(340px,.88fr) minmax(440px,1.12fr);gap:16px;align-items:start}.panel{background:linear-gradient(180deg,#121c31,#0e1729);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;min-width:0;box-shadow:0 18px 50px #00000018}.panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-head h3{margin:0;font-size:14px;letter-spacing:-.01em}.panel-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.panel-body{padding:16px 18px}.tabs{display:flex;gap:5px;background:#091121;padding:5px;border:1px solid #26344e;border-radius:11px;margin-bottom:12px}.tab{flex:1;border:0;background:transparent;color:var(--muted);border-radius:7px;padding:8px 5px;font-weight:750;font-size:12px}.tab[aria-selected=true]{background:#22314c;color:#fff;box-shadow:inset 0 0 0 1px #3b4d6b}.tab-pane[hidden]{display:none}.label-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 7px}.label-row label,.form-label{font-size:12px;color:#d9e4f7;font-weight:750}.hint{font-size:11px;color:var(--muted)}textarea{resize:vertical;min-height:190px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:12px;line-height:1.6;tab-size:2}#steps{min-height:280px}#locators,#methods{min-height:220px}.subtle{color:var(--muted);font-size:12px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.form-grid .full{grid-column:1/-1}.form-field label{display:block;font-size:11px;color:var(--muted);font-weight:750;margin-bottom:5px}.form-field input,.form-field select{width:100%;min-width:0}.check-row{display:flex;align-items:center;gap:8px;color:#c8d4e8;font-size:12px;margin-top:10px}.check-row input{width:auto;accent-color:var(--accent)}.option-section{border-top:1px solid #24334c;margin-top:16px;padding-top:14px}.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#8298bb;font-weight:850;margin-bottom:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.output-head{align-items:flex-start}.output-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.output-status{font-size:11px;color:var(--muted);margin-top:4px}.code-wrap{position:relative;background:#080e19;min-height:430px;max-height:720px;overflow:auto}.code{margin:0;padding:16px 18px;font:12px/1.65 "SFMono-Regular",Consolas,"Liberation Mono",monospace;white-space:pre;tab-size:4;color:#dbe7fb;counter-reset:line}.code-line{display:block;min-height:1.65em;cursor:pointer;padding:0 8px;border-left:2px solid transparent}.code-line:hover{background:#ffffff09}.code-line.active{background:#20304b;border-left-color:var(--accent2)}.ln{display:inline-block;width:34px;color:#526582;user-select:none;text-align:right;margin-right:16px}.tok-key{color:#9eb6ff}.tok-string{color:#9fe2b7}.tok-comment{color:#8092ad;font-style:italic}.tok-fn{color:#e9c68d}.code-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.trace{border-top:1px solid var(--line)}.trace summary{padding:13px 16px;cursor:pointer;font-weight:800;font-size:12px}.trace-list{padding:0 12px 12px;display:grid;gap:7px}.trace-item{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:start;background:#0a1324;border:1px solid #26344e;border-radius:10px;padding:10px}.trace-item.selected{border-color:#64d9bc;background:#10252d}.trace-num{width:23px;height:23px;border-radius:7px;display:grid;place-items:center;background:#20314e;color:#b6c8eb;font-size:10px;font-weight:800}.trace-main{min-width:0}.trace-step{font-family:Consolas,monospace;font-size:11px;overflow-wrap:anywhere;color:#e2ebfb}.trace-meta{font-size:10px;color:var(--muted);margin-top:4px}.status{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:#183b35;color:#8ee8d4;white-space:nowrap}.status.warn{background:#3b2e17;color:#f5d28a}.status.err{background:#421e2b;color:#ffadba}.empty{padding:40px 20px;text-align:center;color:var(--muted)}.empty strong{display:block;color:#dce7fa;font-size:14px;margin-bottom:6px}.alert{border:1px solid #674c28;background:#2b2115;color:#f4d18c;padding:10px 12px;border-radius:10px;font-size:12px;margin:12px 0}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#7183a1;font-size:11px;margin-top:18px}.kbd{font-family:Consolas,monospace;border:1px solid #40516d;border-radius:5px;padding:1px 5px;color:#c9d8f0}
+.dialog-backdrop{position:fixed;inset:0;background:#030711c9;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.dialog-backdrop.open{display:flex}.dialog{width:min(680px,100%);background:#111c30;border:1px solid #344562;border-radius:16px;box-shadow:0 30px 100px #000a;overflow:hidden}.dialog-head{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid var(--line)}.dialog-head h3{margin:0;font-size:15px}.dialog-body{padding:18px}.dialog-body textarea{min-height:240px;width:100%}.toast{position:fixed;bottom:20px;right:20px;background:#17372f;border:1px solid #32745f;color:#b6ffe9;border-radius:10px;padding:11px 14px;box-shadow:0 12px 40px #0008;display:none;z-index:20;font-size:12px}.toast.show{display:block}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.code-wrap{min-height:300px;max-height:600px}.hero{align-items:flex-start;flex-direction:column}.badge{white-space:normal}}@media(max-width:560px){.app{padding:14px 10px 26px}.topbar{align-items:flex-start}.brand h1{font-size:17px}.top-actions .btn{font-size:11px;padding:8px}.panel-head,.panel-body{padding:13px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.toolbar{align-items:stretch}.field-inline{flex:1;min-width:130px;display:block}.field-inline label{display:block;margin-bottom:5px}.field-inline select{width:100%}.output-head{display:block}.output-actions{justify-content:flex-start;margin-top:12px}.trace-item{grid-template-columns:24px 1fr}.trace-item .status{grid-column:2;justify-self:start}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="logo" aria-hidden="true">TF</div><div><div class="eyebrow">QA Engineering Utility</div><h1>TestForge <span style="color:#7f91af;font-weight:500">/ Code Generator</span></h1></div></div>
+    <div class="top-actions"><button class="btn ghost" id="loadSetupTop">Open setup</button><button class="btn" id="saveSetupTop">Save setup</button></div>
+  </header>
+  <section class="hero">
+    <div><div class="eyebrow">Deterministic by design</div><h2>Turn plain-language test steps into automation code.</h2><p>Bring your steps, locators, and helper methods. Generate a framework-aware starting point locally in your browser — no server, no API, no AI calls.</p></div>
+    <div class="badge"><span class="dot"></span> Runs locally · No data uploaded</div>
+  </section>
+  <section class="toolbar" aria-label="Target configuration">
+    <div class="field-inline"><label for="tool">Tool</label><select id="tool"><option>Selenium</option><option>Playwright</option><option>Cypress</option></select></div>
+    <div class="field-inline"><label for="language">Language</label><select id="language"><option>C#</option><option>Java</option><option>Python</option><option>TypeScript</option></select></div>
+    <div class="field-inline"><label for="framework">Test framework</label><select id="framework"></select></div>
+    <div style="flex:1"></div><button class="btn" id="loadSample">Load sample</button><button class="btn primary" id="generate">Generate code ↗</button>
+  </section>
+  <main class="layout">
+    <section class="panel">
+      <div class="panel-head"><div><h3>01 / Test inputs</h3><p>Define the test steps and how your project locates elements.</p></div><span class="badge">3 inputs</span></div>
+      <div class="panel-body">
+        <div class="tabs" role="tablist" aria-label="Input tabs">
+          <button class="tab" role="tab" id="tab-steps" aria-selected="true" aria-controls="pane-steps">Steps</button>
+          <button class="tab" role="tab" id="tab-locators" aria-selected="false" aria-controls="pane-locators">Locators</button>
+          <button class="tab" role="tab" id="tab-methods" aria-selected="false" aria-controls="pane-methods">Your methods</button>
+        </div>
+        <div class="tab-pane" id="pane-steps" role="tabpanel" aria-labelledby="tab-steps">
+          <div class="label-row"><label for="steps">Test steps</label><span class="hint">One action per line</span></div>
+          <textarea id="steps" spellcheck="false" aria-label="Test steps" placeholder='Enter "admin" in login.username&#10;Click login.submit&#10;Wait for home.banner to be visible&#10;Verify home.banner has text "Welcome"'></textarea>
+          <p class="subtle">Use <code>Test: name</code> to start a new test. Prefixes such as Given/When/Then and list numbering are ignored. Start comments with <code>#</code> or <code>//</code>.</p>
+        </div>
+        <div class="tab-pane" id="pane-locators" role="tabpanel" aria-labelledby="tab-locators" hidden>
+          <div class="label-row"><label for="locators">Locator definitions</label><span class="hint">Key = locator</span></div>
+          <textarea id="locators" spellcheck="false" placeholder='login.username = By.Id("username")&#10;login.submit = By.CssSelector("button[type=submit]")'></textarea>
+          <p class="subtle">Use keys in your steps (e.g. <code>login.username</code>). Supports simple key/value lines, section headers, JSON objects, and common locator expressions. Missing keys are flagged, never silently invented.</p>
+        </div>
+        <div class="tab-pane" id="pane-methods" role="tabpanel" aria-labelledby="tab-methods" hidden>
+          <div class="label-row"><label for="methods">Custom helper mappings</label><button class="btn small" id="readHelpers">Read my helper class</button></div>
+          <textarea id="methods" spellcheck="false" placeholder='click = ElementActions.Click({el})&#10;enterText = ElementActions.EnterText({el}, {value})'></textarea>
+          <p class="subtle">Map an action to a helper call. Available placeholders: <code>{el}</code>, <code>{value}</code>, <code>{n}</code>, <code>{ms}</code>, <code>{key}</code>, <code>{drv}</code>. Unmapped actions use built-in templates.</p>
+          <div class="actions"><button class="btn small" id="startPlain">Start from plain code</button></div>
+        </div>
+        <div class="option-section">
+          <div class="section-title">Generation settings</div>
+          <div class="form-grid">
+            <div class="form-field"><label for="className">Class / suite name</label><input id="className" value="GeneratedLoginTests"></div>
+            <div class="form-field"><label for="namespace">Namespace / package</label><input id="namespace" value="GeneratedTests"></div>
+            <div class="form-field"><label for="baseClass">Base class (optional)</label><input id="baseClass" placeholder="BaseTest"></div>
+            <div class="form-field"><label for="browser">Browser</label><select id="browser"><option>Chrome</option><option>Firefox</option><option>Edge</option><option>WebKit</option></select></div>
+            <div class="form-field"><label for="waitSeconds">Default wait (seconds)</label><input id="waitSeconds" type="number" min="1" max="120" value="10"></div>
+            <div class="form-field"><label for="driverName">Driver / page variable</label><input id="driverName" value="driver"></div>
+            <div class="form-field full"><label for="startUrl">Start URL (optional)</label><input id="startUrl" placeholder="https://example.com"></div>
+            <div class="form-field full"><label for="locatorStyle">Locator reference style</label><select id="locatorStyle"><option value="lower">page.name / driver.name</option><option value="upper">Page.Name / Driver.Name</option></select></div>
+          </div>
+          <label class="check-row"><input type="checkbox" id="setupToggle" checked> Include setup and teardown</label>
+          <label class="check-row"><input type="checkbox" id="commentsToggle" checked> Include original step comments</label>
+          <label class="check-row"><input type="checkbox" id="inlineToggle"> Inline locator values instead of references</label>
+        </div>
+        <div id="inputAlert" class="alert" hidden></div>
+        <div class="actions"><button class="btn primary" id="generateBottom">Generate code</button><button class="btn ghost" id="clearInputs">Clear inputs</button></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head output-head"><div><h3>02 / Generated output</h3><p id="outputSummary">Your generated code will appear here.</p></div><div class="output-actions"><button class="btn small" id="copyCode" disabled>Copy code</button><button class="btn small" id="downloadCode" disabled>Download file</button></div></div>
+      <div id="emptyState" class="empty"><strong>Your code workspace is ready.</strong>Paste steps and locator definitions, then select your target stack and generate.</div>
+      <div id="codeWrap" class="code-wrap" hidden><pre id="code" class="code" aria-label="Generated code"></pre></div>
+      <div class="code-footer"><span id="lineCount">0 lines</span><span id="fileName">No file generated</span><span>Click a line to trace its source step</span></div>
+      <div class="trace">
+        <details open><summary>How your steps were read <span id="traceCount" style="color:#8095b8;font-weight:500">· 0 steps</span></summary><div id="traceList" class="trace-list"><div class="subtle" style="padding:6px">Generate code to see action parsing and locator resolution.</div></div></details>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span>TestForge · Client-side utility · No network requests</span><span>Rule-based generation. Review generated code and project dependencies before execution.</span></footer>
+</div>
+<div class="dialog-backdrop" id="helperDialog" role="dialog" aria-modal="true" aria-labelledby="helperTitle">
+  <div class="dialog"><div class="dialog-head"><h3 id="helperTitle">Read my helper class</h3><button class="btn small" id="closeDialog">Close</button></div><div class="dialog-body"><p class="subtle">Paste helper source code. This local parser detects likely method names and drafts mapping lines; review them before using.</p><textarea id="helperSource" placeholder="Paste C#, Java, Python, or TypeScript helper source here..."></textarea><div class="actions"><button class="btn primary" id="detectMethods">Detect methods & draft mappings</button></div><p class="subtle" id="helperResult"></p></div></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+"use strict";
+const $ = id => document.getElementById(id);
+const fields = ["tool","language","framework","steps","locators","methods","className","namespace","baseClass","browser","waitSeconds","driverName","startUrl","locatorStyle","setupToggle","commentsToggle","inlineToggle"];
+const frameworkOptions = {
+ "C#":["NUnit","MSTest","xUnit"],
+ "Java":["JUnit 5","TestNG"],
+ "Python":["pytest","unittest"],
+ "TypeScript":["Mocha/Jest","Playwright Test"]
+};
+let generated = null;
+let lastTrace = [];
+const samples = {
+ steps: `Test: Login shows welcome banner
+Given the login page is open
+Enter "admin" in login.username
+Enter "correct-horse" in login.password
+Click login.submit
+Wait for home.banner to be visible
+Verify home.banner has text "Welcome"`,
+ locators: `login.username = By.Id("username")
+login.password = By.Id("password")
+login.submit = By.CssSelector("button[type='submit']")
+home.banner = By.CssSelector("[data-testid='welcome-banner']")`,
+ methods: `click = ElementActions.Click({el})
+enterText = ElementActions.EnterText({el}, {value})`
+};
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2600)}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function setTab(name){
+ ["steps","locators","methods"].forEach(n=>{const active=n===name;$("tab-"+n).setAttribute("aria-selected",String(active));$("pane-"+n).hidden=!active});
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.id.replace("tab-",""))));
+function updateFrameworks(preserve=true){
+ const lang=$("language").value, tool=$("tool").value, sel=$("framework"), old=sel.value;
+ let opts=frameworkOptions[lang]||[];
+ if(tool==="Playwright" && lang==="TypeScript") opts=["Playwright Test","Mocha/Jest"];
+ if(tool==="Cypress") opts=["Mocha/Jest"];
+ sel.innerHTML=opts.map(o=>`<option>${escapeHtml(o)}</option>`).join("");
+ if(preserve && opts.includes(old))sel.value=old;
+}
+$("tool").addEventListener("change",()=>{
+ if($("tool").value==="Cypress"){$("language").value="TypeScript";$("language").disabled=true}
+ else {$("language").disabled=false}
+ updateFrameworks();saveState();
+});
+$("language").addEventListener("change",()=>{updateFrameworks();saveState()});
+function readState(){
+ const s={};fields.forEach(k=>{const el=$(k);s[k]=el.type==="checkbox"?el.checked:el.value});return s;
+}
+function applyState(s){
+ fields.forEach(k=>{if(s[k]!==undefined){const el=$(k);if(el.type==="checkbox")el.checked=!!s[k];else el.value=s[k]}});
+ if($("tool").value==="Cypress"){$("language").value="TypeScript";$("language").disabled=true}else $("language").disabled=false;
+ updateFrameworks(true);
+}
+function saveState(){try{localStorage.setItem("testforge-state",JSON.stringify(readState()))}catch(e){}}
+function restoreState(){try{const s=JSON.parse(localStorage.getItem("testforge-state")||"null");if(s)applyState(s)}catch(e){}}
+fields.forEach(k=>$(k).addEventListener("change",saveState));
+function parseLocators(text){
+ const out={}; let raw=text.trim(); if(!raw)return out;
+ if(raw.startsWith("{")){try{const obj=JSON.parse(raw);function walk(o,p=""){Object.entries(o).forEach(([k,v])=>{const key=p?p+"."+k:k;if(v&&typeof v==="object"&&!Array.isArray(v))walk(v,key);else out[key]=String(v)})}walk(obj);return out}catch(e){}}
+ let section="";
+ raw.split(/\r?\n/).forEach(line=>{
+   let t=line.trim();if(!t||t.startsWith("#")||t.startsWith("//"))return;
+   const h=t.match(/^\[([^\]]+)\]$/);if(h){section=h[1].trim();return}
+   let m=t.match(/^["']?([\w$.-]+)["']?\s*[:=]\s*(.+)$/);
+   if(m){let key=m[1].trim(),val=m[2].trim().replace(/[,;]\s*$/,"");if(section&&!key.startsWith(section+"."))key=section+"."+key;out[key]=val;return}
+   // Best-effort recognition of common locator fields in pasted page-object source.
+   m=t.match(/(?:By\.(?:Id|Name|XPath|CssSelector|ClassName|TagName|LinkText|PartialLinkText)|page\.locator|page\.getBy\w+|driver\.findElement)\s*\(.+/i);
+   if(m){const id=t.match(/(?:public|private|protected)?\s*(?:readonly\s+)?(?:IWebElement|WebElement|Locator|By|var|const|let)?\s*([\w$]+)\s*(?:=|;)/);if(id)out[id[1]]=m[0]}
+ });
+ return out;
+}
+function closestKey(target,keys){
+ if(!keys.length)return "";const norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");
+ const a=norm(target);let best="",score=0;
+ for(const k of keys){const b=norm(k);let common=0;while(common<Math.min(a.length,b.length)&&a[common]===b[common])common++;let sc=(2*common)/(a.length+b.length||1);if(a.includes(b)||b.includes(a))sc=Math.max(sc,.65);if(sc>score){score=sc;best=k}}
+ return score>=.25?best:"";
+}
+function parseMethods(text){const map={};text.split(/\r?\n/).forEach(line=>{const m=line.trim().match(/^([\w .-]+)\s*=\s*(.+)$/);if(m)map[m[1].trim().toLowerCase()]=m[2].trim()});return map}
+function cleanStep(line){return line.replace(/^\s*(?:\d+[.)]\s*|[-*]\s*)/,"").replace(/^\s*(?:Given|When|Then|And|But)\s+/i,"").trim()}
+function splitTests(text){
+ const groups=[];let cur={name:"Test",steps:[]}, seen=false;
+ text.split(/\r?\n/).forEach((raw,i)=>{
+  const t=raw.trim();if(!t)return;
+  const tm=t.match(/^Test\s*:\s*(.+)$/i);
+  if(tm){if(cur.steps.length||seen)groups.push(cur);cur={name:tm[1].trim()||`Test ${groups.length+1}`,steps:[]};seen=true;return}
+  cur.steps.push({raw, text:cleanStep(raw),line:i+1});
+ });
+ if(cur.steps.length||!groups.length)groups.push(cur);
+ return groups;
+}
+function quote(s,lang){const q=lang==="Python"?"'":'"';return q+s.replace(/\\/g,"\\\\").replace(new RegExp(q,"g"),"\\"+q)+q}
+function parseAction(text){
+ let t=text.trim(),m;
+ const patterns=[
+  ["openUrl",/^(?:open|navigate to|go to|visit)\s+(?:url\s+)?(.+)$/i],
+  ["refresh",/^(?:refresh|reload)(?:\s+(?:the\s+)?page)?$/i],
+  ["back",/^(?:go\s+)?back(?:\s+in\s+the\s+browser)?$/i],
+  ["doubleClick",/^(?:double[- ]click|doubleclick)\s+(.+)$/i],
+  ["rightClick",/^(?:right[- ]click|context click)\s+(.+)$/i],
+  ["click",/^(?:click|tap|press)\s+(.+)$/i],
+  ["hover",/^(?:hover(?:\s+over)?|move to)\s+(.+)$/i],
+  ["enterText",/^(?:enter|type|input|fill)\s+(.+?)\s+(?:in|into)\s+(.+)$/i],
+  ["clear",/^(?:clear|empty)\s+(.+)$/i],
+  ["select",/^(?:select|choose)\s+(.+?)\s+(?:in|from)\s+(.+)$/i],
+  ["check",/^check\s+(.+)$/i],["uncheck",/^uncheck\s+(.+)$/i],
+  ["pressKey",/^press\s+(?:the\s+)?key\s+(.+?)(?:\s+(?:in|on)\s+(.+))?$/i],
+  ["highlight",/^highlight\s+(.+)$/i],["scroll",/^(?:scroll to|scroll until)\s+(.+)$/i],
+  ["upload",/^(?:upload|attach)\s+(.+?)\s+(?:to|in)\s+(.+)$/i],
+  ["screenshot",/^(?:take\s+)?screenshot(?:\s+(.+))?$/i],
+  ["waitVisible",/^wait(?:\s+for)?\s+(.+?)\s+to\s+be\s+(?:visible|displayed)$/i],
+  ["waitClickable",/^wait(?:\s+for)?\s+(.+?)\s+to\s+be\s+(?:clickable|enabled)$/i],
+  ["waitHidden",/^wait(?:\s+for)?\s+(.+?)\s+to\s+be\s+(?:hidden|invisible|not visible)$/i],
+  ["waitSeconds",/^wait\s+(\d+(?:\.\d+)?)\s*(?:seconds?|secs?|s)$/i],
+  ["verifyContains",/^(?:verify|assert|check)\s+(.+?)\s+(?:contains|contain)\s+(.+)$/i],
+  ["verifyText",/^(?:verify|assert|check)\s+(.+?)\s+(?:has text|text is|equals text|has the text)\s+(.+)$/i],
+  ["verifyVisible",/^(?:verify|assert|check)\s+(.+?)\s+(?:is|to be)\s+visible$/i],
+  ["verifyHidden",/^(?:verify|assert|check)\s+(.+?)\s+(?:is|to be)\s+hidden$/i],
+  ["verifyEnabled",/^(?:verify|assert|check)\s+(.+?)\s+(?:is|to be)\s+enabled$/i],
+  ["verifyDisabled",/^(?:verify|assert|check)\s+(.+?)\s+(?:is|to be)\s+disabled$/i],
+  ["verifyTitle",/^(?:verify|assert|check)\s+(?:page\s+)?title\s+(?:is|equals|has text)\s+(.+)$/i],
+  ["verifyUrl",/^(?:verify|assert|check)\s+(?:page\s+)?url\s+(?:is|equals|contains)\s+(.+)$/i]
+ ];
+ for(const [action,re] of patterns){m=t.match(re);if(m){let target="",value="";
+  if(["openUrl","refresh","back","screenshot","waitSeconds","verifyTitle","verifyUrl"].includes(action)){target=m[1]||"";value=m[2]||""}
+  else if(action==="enterText"||action==="select"||action==="upload"){value=m[1];target=m[2]}
+  else if(action==="pressKey"){value=m[1];target=m[2]||""}
+  else if(action==="verifyText"||action==="verifyContains"){target=m[1];value=m[2]}
+  else target=m[1]||"";
+  return {action,target:stripQuotes(target),value:stripQuotes(value),original:t};
+ }}
+ return null;
+}
+function stripQuotes(s){s=String(s||"").trim();if((s.startsWith('"')&&s.endsWith('"'))||(s.startsWith("'")&&s.endsWith("'")))return s.slice(1,-1);return s}
+const actionNames={openUrl:"Open URL",refresh:"Refresh",back:"Back",click:"Click",doubleClick:"Double-click",rightClick:"Right-click",hover:"Hover",enterText:"Enter text",clear:"Clear",select:"Select option",check:"Check",uncheck:"Uncheck",pressKey:"Press key",highlight:"Highlight",scroll:"Scroll to",upload:"Upload file",screenshot:"Screenshot",waitVisible:"Wait until visible",waitClickable:"Wait until clickable",waitHidden:"Wait until hidden",waitSeconds:"Wait N seconds",verifyText:"Verify text",verifyContains:"Verify contains",verifyVisible:"Verify visible",verifyHidden:"Verify hidden",verifyEnabled:"Verify enabled",verifyDisabled:"Verify disabled",verifyTitle:"Verify title",verifyUrl:"Verify URL"};
+function findLocator(target,locs){
+ if(!target)return null;const keys=Object.keys(locs);
+ if(locs[target])return {key:target,value:locs[target]};
+ const k=keys.find(x=>x.toLowerCase()===target.toLowerCase());if(k)return {key:k,value:locs[k]};
+ const close=closestKey(target,keys);return {key:null,value:null,suggestion:close};
+}
+function locatorExpr(target,locs,opts){
+ const found=findLocator(target,locs);
+ if(opts.inlineToggle && found && found.value)return {expr:found.value,found};
+ const style=opts.locatorStyle;
+ const key=found?.key||target||"";
+ const parts=key.split(/[.-]/).filter(Boolean);
+ const ref=parts.map((p,i)=>i===0?p[0].toLowerCase()+p.slice(1):p[0].toUpperCase()+p.slice(1)).join("");
+ const upper=parts.map(p=>p[0].toUpperCase()+p.slice(1)).join("");
+ return {expr:style==="upper"?upper:ref,found};
+}
+function framework(){return $("framework").value}
+function opts(){return readState()}
+function safeIdent(s,fallback="GeneratedTests"){let x=String(s||"").replace(/[^A-Za-z0-9_$]/g,"");if(!x)x=fallback;if(/^\d/.test(x))x="_"+x;return x}
+function methodName(s){return safeIdent(s.replace(/[^A-Za-z0-9]+(.)?/g,(_,c)=>c?c.toUpperCase():""),"generatedTest")}
+function makeCode(groups,locs,settings){
+ const tool=settings.tool,lang=settings.language,fw=settings.framework,drv=safeIdent(settings.driverName,"driver"),classN=safeIdent(settings.className),base=settings.baseClass.trim(),custom=parseMethods(settings.methods);
+ const isPw=tool==="Playwright",isCy=tool==="Cypress",isPy=lang==="Python",isJava=lang==="Java",isCs=lang==="C#",isTs=lang==="TypeScript";
+ const lines=[], mapping=[], warnings=[];
+ const add=(s="",meta=null)=>{const idx=lines.length;lines.push({text:s,step:meta?.step??null,kind:meta?.kind||"code"});if(meta?.step!==undefined&&meta.step!==null){const x=mapping.find(m=>m.index===meta.step);if(x)x.codeLines.push(idx)}return idx};
+ const comment=s=>isPy?"# "+s:isCy||isTs||isJava||isCs?"// "+s:"# "+s;
+ const indent=n=>"    ".repeat(n);
+ const q=s=>quote(String(s),lang);
+ const start=(s,step=null)=>add(s,{step});
+ const methodCall=(action,el,value,raw,stepIdx)=>{
+   const customKey=({click:"click",doubleClick:"doubleClick",rightClick:"rightClick",enterText:"enterText",clear:"clear",select:"select",hover:"hover",check:"check",uncheck:"uncheck",pressKey:"pressKey"})[action];
+   const template=custom[customKey]||custom[action]||custom[actionNames[action]?.toLowerCase()];
+   if(template){let out=template.replaceAll("{el}",el||"").replaceAll("{value}",q(value)).replaceAll("{n}",String(value||settings.waitSeconds)).replaceAll("{ms}",String(Number(settings.waitSeconds)*1000)).replaceAll("{key}",q(value)).replaceAll("{drv}",drv);return {code:out,custom:true}}
+   return {code:null,custom:false};
+ };
+ // Header and imports by stack
+ if(isCs){
+  add("using System;");if(tool==="Selenium"){add("using OpenQA.Selenium;");add("using OpenQA.Selenium.Chrome;");add("using OpenQA.Selenium.Support.UI;");}
+  if(isPw){add("using Microsoft.Playwright;");add("using System.Threading.Tasks;")}
+  if(fw==="NUnit"){add("using NUnit.Framework;")}else if(fw==="MSTest"){add("using Microsoft.VisualStudio.TestTools.UnitTesting;")}else add("using Xunit;");
+  add("");if(settings.namespace.trim()){add(`namespace ${settings.namespace.trim()}`);add("{")}
+  const level=settings.namespace.trim()?1:0;
+  add(indent(level)+`public class ${classN}${base?" : "+base:""}`);add(indent(level)+"{");
+  if(tool==="Selenium"){add(indent(level+1)+`private IWebDriver ${drv};`);if(settings.setupToggle){add("");add(indent(level+1)+(fw==="NUnit"?"[SetUp]":fw==="MSTest"?"[TestInitialize]":"")+"");add(indent(level+1)+`public void SetUp() { ${drv} = new ChromeDriver(); }`);add(indent(level+1)+(fw==="NUnit"?"[TearDown]":fw==="MSTest"?"[TestCleanup]":"")+"");add(indent(level+1)+`public void TearDown() { ${drv}?.Quit(); }`)}}
+  if(isPw){add(indent(level+1)+"private IPlaywright playwright;");add(indent(level+1)+"private IBrowser browser;");add(indent(level+1)+"private IPage page;");if(settings.setupToggle){add(indent(level+1)+"// TODO: Initialize Playwright and browser in async setup.");}}
+  groups.forEach((g,gi)=>{if(gi)add("");if(settings.commentsToggle)add(indent(level+1)+`// Test: ${g.name}`);if(fw==="NUnit")add(indent(level+1)+"[Test]");else if(fw==="MSTest")add(indent(level+1)+"[TestMethod]");else add(indent(level+1)+"[Fact]");const async=isPw;add(indent(level+1)+`public ${async?"async Task":"void"} ${methodName(g.name)}()`+(async?"":""));add(indent(level+1)+"{");renderSteps(g,level+2);add(indent(level+1)+"}");});
+  add(indent(level)+"}");if(settings.namespace.trim())add("}");
+ } else if(isJava){
+  add("import org.openqa.selenium.*;");if(tool==="Selenium"){add("import org.openqa.selenium.chrome.ChromeDriver;");add("import org.openqa.selenium.support.ui.WebDriverWait;");add("import java.time.Duration;");}
+  if(fw==="JUnit 5"){add("import org.junit.jupiter.api.*;");add("import static org.junit.jupiter.api.Assertions.*;")}else{add("import org.testng.annotations.*;");add("import static org.testng.Assert.*;")}
+  add("");if(settings.namespace.trim())add(`package ${settings.namespace.trim()};`);if(settings.namespace.trim())add("");
+  add(`public class ${classN}${base?" extends "+base:""} {`);if(tool==="Selenium"){add(`    private WebDriver ${drv};`);if(settings.setupToggle){add(fw==="JUnit 5"?"    @BeforeEach":"    @BeforeMethod");add(`    public void setUp() { ${drv} = new ChromeDriver(); }`);add(fw==="JUnit 5"?"    @AfterEach":"    @AfterMethod");add(`    public void tearDown() { if (${drv} != null) ${drv}.quit(); }`)}}
+  groups.forEach((g,gi)=>{if(gi)add("");if(settings.commentsToggle)add(`    // Test: ${g.name}`);add(fw==="JUnit 5"?"    @Test":"    @Test");add(`    public void ${methodName(g.name)}() {`);renderSteps(g,2);add("    }")});add("}");
+ } else if(isPy){
+  if(tool==="Selenium"){add("from selenium import webdriver");add("from selenium.webdriver.common.by import By");add("from selenium.webdriver.support.ui import WebDriverWait, Select");add("from selenium.webdriver.support import expected_conditions as EC")}
+  else if(isPw){add("import pytest");add("from playwright.sync_api import sync_playwright, expect")}
+  else {add("import pytest");add("// TODO: install/configure the selected browser tooling")}
+  if(fw==="unittest")add("import unittest");
+  add("");const cls=fw==="unittest"?"class "+classN+"(unittest.TestCase):":"class "+classN+":";
+  add(cls);if(tool==="Selenium"){add("    def setup_method(self):");add(`        self.${drv} = webdriver.Chrome()`);if(settings.setupToggle){add("    def teardown_method(self):");add(`        self.${drv}.quit()`)}}
+  groups.forEach((g,gi)=>{if(gi)add("");if(settings.commentsToggle)add(`    # Test: ${g.name}`);add(`    def test_${methodName(g.name).toLowerCase()}(self):`);renderSteps(g,2);if(!g.steps.some(s=>parseAction(s.text)))add("        pass")});if(fw==="unittest")add(""); 
+ } else {
+  if(tool==="Cypress"){add("/// <reference types=\"cypress\" />");add("");}
+  else if(isPw){add('import { test, expect } from "@playwright/test";');add("")}
+  else {add('import { describe, it, beforeEach, afterEach } from "mocha";');add('import { expect } from "chai";');add("")}
+  if(tool==="Cypress"||(!isPw&&isTs)){add(`describe(${q(classN)}, () => {`);if(settings.setupToggle&&settings.startUrl.trim())add(`    beforeEach(() => cy.visit(${q(settings.startUrl.trim())}));`);
+   groups.forEach((g,gi)=>{if(gi)add("");if(settings.commentsToggle)add(`    // Test: ${g.name}`);add(`    it(${q(g.name)}, () => {`);renderSteps(g,2);add("    });")});add("});")
+  } else {
+   groups.forEach((g,gi)=>{if(gi)add("");if(settings.commentsToggle)add(`// Test: ${g.name}`);add(`test(${q(g.name)}, async ({ page }) => {`);renderSteps(g,1);add("});")});
+  }
+ }
+ function renderSteps(g,level){
+   let emitted=0;
+   g.steps.forEach((s,si)=>{
+    const clean=s.text;if(!clean)return;
+    const stepIndex=mapping.length;mapping.push({index:stepIndex,sourceLine:s.line,text:s.raw,action:"",target:"",status:"pending",detail:"",codeLines:[]});
+    const trace=mapping[stepIndex], pref=indent(level);
+    if(/^(#|\/\/)/.test(clean)){trace.action="Comment";trace.status="ok";add(pref+clean,settings.commentsToggle?{step:stepIndex,kind:"comment"}:{step:stepIndex});emitted++;return}
+    const parsed=parseAction(clean);
+    if(!parsed){trace.action="Unrecognized";trace.status="error";trace.detail="No supported action pattern matched.";warnings.push(`Line ${s.line}: unsupported step — ${clean}`);add(pref+comment("TODO: could not convert — unsupported step: "+clean),{step:stepIndex,kind:"comment"});emitted++;return}
+    trace.action=actionNames[parsed.action]||parsed.action;trace.target=parsed.target||"";
+    let el="",found=null;
+    const targetNeedsLocator=!["openUrl","refresh","back","screenshot","waitSeconds","verifyTitle","verifyUrl"].includes(parsed.action);
+    if(targetNeedsLocator){
+      const res=locatorExpr(parsed.target,locs,settings);el=res.expr;found=res.found;
+      if(!found?.key || !found?.value){trace.status="warn";trace.detail=found?.suggestion?`Missing locator. Closest key: ${found.suggestion}`:"Locator key not defined.";warnings.push(`Line ${s.line}: locator "${parsed.target}" not found${found?.suggestion?`; closest: ${found.suggestion}`:""}.`)}
+      else {trace.status="ok";trace.detail=`Locator resolved: ${found.key}`}
+    }else {trace.status="ok"}
+    const customCall=methodCall(parsed.action,el,parsed.value,clean,stepIndex);
+    let out=customCall.code;
+    const webEl = isCs ? (isPw?`page.Locator(${q(found?.value||parsed.target)})`:`${drv}.FindElement(${el})`) :
+      isJava ? `${drv}.findElement(${el})` :
+      isPy ? `${drv}.find_element(*${el})` :
+      isCy ? `cy.get(${q(found?.value||parsed.target)})` :
+      isPw ? `page.locator(${q(found?.value||parsed.target)})` : `${drv}.findElement(${el})`;
+    const val=parsed.value;
+    if(!out){
+      const wait=Number(settings.waitSeconds)||10;
+      if(parsed.action==="openUrl")out=isCs?`${isPw?"await page.GotoAsync("+q(val||parsed.target)+");":drv+".Navigate().GoToUrl("+q(parsed.target)+");"}`:isJava?`${drv}.get(${q(parsed.target)});`:isPy?`${drv}.get(${q(parsed.target)})`:isCy?`cy.visit(${q(parsed.target)});`:isPw?`await page.goto(${q(parsed.target)});`:`${drv}.get(${q(parsed.target)});`;
+      else if(parsed.action==="refresh")out=isCs?`${isPw?"await page.ReloadAsync();":drv+".Navigate().Refresh();"}`:isJava?`${drv}.navigate().refresh();`:isPy?`${drv}.refresh()`:isCy?"cy.reload();":isPw?"await page.reload();":`${drv}.navigate().refresh();`;
+      else if(parsed.action==="back")out=isCs?`${isPw?"await page.GoBackAsync();":drv+".Navigate().Back();"}`:isJava?`${drv}.navigate().back();`:isPy?`${drv}.back()`:isCy?"cy.go('back');":isPw?"await page.goBack();":`${drv}.navigate().back();`;
+      else if(parsed.action==="click")out=isCs?`${isPw?`await ${webEl}.ClickAsync();`:`${webEl}.Click();`}`:isJava?`${webEl}.click();`:isPy?`${webEl}.click()`:isCy?`${webEl}.click();`:isPw?`await ${webEl}.click();`:`${webEl}.click();`;
+      else if(parsed.action==="doubleClick")out=isCs?`${isPw?`await ${webEl}.DblClickAsync();`:`new OpenQA.Selenium.Interactions.Actions(${drv}).DoubleClick(${webEl}).Perform();`}`:isJava?`new org.openqa.selenium.interactions.Actions(${drv}).doubleClick(${webEl}).perform();`:isPy?`from selenium.webdriver.common.action_chains import ActionChains; ActionChains(${drv}).double_click(${webEl}).perform()`:isCy?`${webEl}.dblclick();`:isPw?`await ${webEl}.dblclick();`:`${webEl}.dblclick();`;
+      else if(parsed.action==="rightClick")out=isCs?`${isPw?`await ${webEl}.clickAsync(new() { Button = MouseButton.Right });`:`new OpenQA.Selenium.Interactions.Actions(${drv}).ContextClick(${webEl}).Perform();`}`:isJava?`new org.openqa.selenium.interactions.Actions(${drv}).contextClick(${webEl}).perform();`:isPy?`from selenium.webdriver.common.action_chains import ActionChains; ActionChains(${drv}).context_click(${webEl}).perform()`:isCy?`${webEl}.rightclick();`:isPw?`await ${webEl}.click({ button: "right" });`:`${webEl}.click({ button: "right" });`;
+      else if(parsed.action==="hover")out=isCs?`${isPw?`await ${webEl}.HoverAsync();`:`new OpenQA.Selenium.Interactions.Actions(${drv}).MoveToElement(${webEl}).Perform();`}`:isJava?`new org.openqa.selenium.interactions.Actions(${drv}).moveToElement(${webEl}).perform();`:isPy?`from selenium.webdriver.common.action_chains import ActionChains; ActionChains(${drv}).move_to_element(${webEl}).perform()`:isCy?`${webEl}.trigger("mouseover");`:isPw?`await ${webEl}.hover();`:`${webEl}.hover();`;
+      else if(parsed.action==="enterText")out=isCs?`${isPw?`await ${webEl}.FillAsync(${q(val)});`:`${webEl}.SendKeys(${q(val)});`}`:isJava?`${webEl}.sendKeys(${q(val)});`:isPy?`${webEl}.send_keys(${q(val)})`:isCy?`${webEl}.clear().type(${q(val)});`:isPw?`await ${webEl}.fill(${q(val)});`:`${webEl}.fill(${q(val)});`;
+      else if(parsed.action==="clear")out=isCs?`${isPw?`await ${webEl}.FillAsync("");`:`${webEl}.Clear();`}`:isJava?`${webEl}.clear();`:isPy?`${webEl}.clear()`:isCy?`${webEl}.clear();`:isPw?`await ${webEl}.clear();`:`${webEl}.clear();`;
+      else if(parsed.action==="select")out=isCs?`${isPw?`await ${webEl}.SelectOptionAsync(new[] { ${q(val)} });`:`new SelectElement(${webEl}).SelectByText(${q(val)});`}`:isJava?`new org.openqa.selenium.support.ui.Select(${webEl}).selectByVisibleText(${q(val)});`:isPy?`Select(${webEl}).select_by_visible_text(${q(val)})`:isCy?`${webEl}.select(${q(val)});`:isPw?`await ${webEl}.selectOption({ label: ${q(val)} });`:`${webEl}.selectOption({ label: ${q(val)} });`;
+      else if(parsed.action==="check"||parsed.action==="uncheck") {let yes=parsed.action==="check";out=isCs?`${isPw?`await ${webEl}.${yes?"Check":"Uncheck"}Async();`:`if (${webEl}.Selected != ${yes}) ${webEl}.Click();`}`:isJava?`if (${webEl}.isSelected() != ${yes}) ${webEl}.click();`:isPy?`(${webEl}.click() if ${webEl}.is_selected() != ${yes} else None)`:isCy?`${webEl}.${yes?"check":"uncheck"}();`:isPw?`await ${webEl}.${yes?"check":"uncheck"}();`:`${webEl}.${yes?"check":"uncheck"}();`}
+      else if(parsed.action==="pressKey")out=isCs?`${isPw?`await ${webEl||"page"}.PressAsync(${q(val)});`:`${webEl}.SendKeys(${q(val)});`}`:isJava?`${webEl||drv}.sendKeys(${q(val)});`:isPy?`${webEl||drv}.send_keys(${q(val)})`:isCy?`${webEl||"cy.get('body')"}.type(${q(val)});`:isPw?`await ${webEl||"page"}.press(${q(val)});`:`${webEl||"cy.get('body')"}.type(${q(val)});`;
+      else if(parsed.action==="waitVisible")out=isCs?`${isPw?`await ${webEl}.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = ${wait*1000} });`:`new WebDriverWait(${drv}, TimeSpan.FromSeconds(${wait})).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(${el}));`}`:isJava?`new WebDriverWait(${drv}, Duration.ofSeconds(${wait})).until(ExpectedConditions.visibilityOfElementLocated(${el}));`:isPy?`WebDriverWait(${drv}, ${wait}).until(EC.visibility_of_element_located(${el}))`:isCy?`${webEl}.should("be.visible");`:isPw?`await expect(${webEl}).toBeVisible({ timeout: ${wait*1000} });`:`await expect(${webEl}).toBeVisible({ timeout: ${wait*1000} });`;
+      else if(parsed.action==="waitClickable")out=isCs?`${isPw?`await expect(${webEl}).ToBeEnabledAsync();`:`new WebDriverWait(${drv}, TimeSpan.FromSeconds(${wait})).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(${el}));`}`:isJava?`new WebDriverWait(${drv}, Duration.ofSeconds(${wait})).until(ExpectedConditions.elementToBeClickable(${el}));`:isPy?`WebDriverWait(${drv}, ${wait}).until(EC.element_to_be_clickable(${el}))`:isCy?`${webEl}.should("be.enabled");`:isPw?`await expect(${webEl}).toBeEnabled({ timeout: ${wait*1000} });`:`await expect(${webEl}).toBeEnabled({ timeout: ${wait*1000} });`;
+      else if(parsed.action==="waitHidden")out=isCs?`${isPw?`await ${webEl}.WaitForAsync(new() { State = WaitForSelectorState.Hidden, Timeout = ${wait*1000} });`:`new WebDriverWait(${drv}, TimeSpan.FromSeconds(${wait})).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(${el}));`}`:isJava?`new WebDriverWait(${drv}, Duration.ofSeconds(${wait})).until(ExpectedConditions.invisibilityOfElementLocated(${el}));`:isPy?`WebDriverWait(${drv}, ${wait}).until(EC.invisibility_of_element_located(${el}))`:isCy?`${webEl}.should("not.be.visible");`:isPw?`await expect(${webEl}).toBeHidden({ timeout: ${wait*1000} });`:`await expect(${webEl}).toBeHidden({ timeout: ${wait*1000} });`;
+      else if(parsed.action==="waitSeconds")out=isCs?`${isPw?`await Task.Delay(${Math.round(Number(parsed.target)*1000)});`:`System.Threading.Thread.Sleep(${Math.round(Number(parsed.target)*1000)});`}`:isJava?`Thread.sleep(${Math.round(Number(parsed.target)*1000)});`:isPy?`import time; time.sleep(${Number(parsed.target)})`:isCy?`cy.wait(${Math.round(Number(parsed.target)*1000)});`:isPw?`await page.waitForTimeout(${Math.round(Number(parsed.target)*1000)});`:`await new Promise(resolve => setTimeout(resolve, ${Math.round(Number(parsed.target)*1000)}));`;
+      else if(parsed.action.startsWith("verify")){
+       const assertion=parsed.action;
+       if(assertion==="verifyTitle")out=isCs?`${isPw?`await Microsoft.Playwright.Assertions.Expect(page).ToHaveTitleAsync(${q(parsed.target)});`:`Assert.That(${drv}.Title, Is.EqualTo(${q(parsed.target)}));`}`:isJava?`assertEquals(${q(parsed.target)}, ${drv}.getTitle());`:isPy?`assert ${drv}.title == ${q(parsed.target)}`:isCy?`cy.title().should("eq", ${q(parsed.target)});`:isPw?`await expect(page).toHaveTitle(${q(parsed.target)});`:`expect(document.title).to.equal(${q(parsed.target)});`;
+       else if(assertion==="verifyUrl")out=isCs?`${isPw?`await Microsoft.Playwright.Assertions.Expect(page).ToHaveURLAsync(${q(parsed.target)});`:`Assert.That(${drv}.Url, Is.EqualTo(${q(parsed.target)}));`}`:isJava?`assertEquals(${q(parsed.target)}, ${drv}.getCurrentUrl());`:isPy?`assert ${drv}.current_url == ${q(parsed.target)}`:isCy?`cy.url().should("include", ${q(parsed.target)});`:isPw?`await expect(page).toHaveURL(${q(parsed.target)});`:`expect(location.href).to.contain(${q(parsed.target)});`;
+       else if(assertion==="verifyText"||assertion==="verifyContains")out=isCs?`${isPw?`await Microsoft.Playwright.Assertions.Expect(${webEl}).ToContainTextAsync(${q(val)});`:`Assert.That(${webEl}.Text, ${assertion==="verifyText"?"Is.EqualTo":"Does.Contain"}(${q(val)}));`}`:isJava?`assert${assertion==="verifyText"?"Equals":"True"}(${assertion==="verifyText"?q(val)+", "+webEl+".getText()":webEl+".getText().contains("+q(val)+")"});`:isPy?`assert ${assertion==="verifyText"?webEl+".text == "+q(val):q(val)+" in "+webEl+".text"}`:isCy?`${webEl}.should(${assertion==="verifyText"?"'have.text'":"'contain.text'"}, ${q(val)});`:isPw?`await expect(${webEl}).${assertion==="verifyText"?"toHaveText":"toContainText"}(${q(val)});`:`expect(${webEl}.textContent).${assertion==="verifyText"?"to.equal":"to.contain"}(${q(val)});`;
+       else if(assertion==="verifyVisible"||assertion==="verifyHidden")out=isCs?`${isPw?`await Microsoft.Playwright.Assertions.Expect(${webEl}).${assertion==="verifyVisible"?"ToBeVisible":"ToBeHidden"}Async();`:`Assert.That(${webEl}.Displayed, Is.${assertion==="verifyVisible"?"True":"False"});`}`:isJava?`assertEquals(${assertion==="verifyVisible"}, ${webEl}.isDisplayed());`:isPy?`assert ${webEl}.is_displayed() is ${assertion==="verifyVisible"?"True":"False"}`:isCy?`${webEl}.should(${assertion==="verifyVisible"?"'be.visible'":"'not.be.visible'"});`:isPw?`await expect(${webEl}).${assertion==="verifyVisible"?"toBeVisible":"toBeHidden"}();`:`expect(${webEl}).${assertion==="verifyVisible"?"toBeVisible":"not.toBeVisible"}();`;
+       else out=isCs?`${isPw?`await Microsoft.Playwright.Assertions.Expect(${webEl}).${assertion==="verifyEnabled"?"ToBeEnabled":"ToBeDisabled"}Async();`:`Assert.That(${webEl}.Enabled, Is.${assertion==="verifyEnabled"?"True":"False"});`}`:isJava?`assertEquals(${assertion==="verifyEnabled"}, ${webEl}.isEnabled());`:isPy?`assert ${webEl}.is_enabled() is ${assertion==="verifyEnabled"?"True":"False"}`:isCy?`${webEl}.should(${assertion==="verifyEnabled"?"'be.enabled'":"'be.disabled'"});`:isPw?`await expect(${webEl}).${assertion==="verifyEnabled"?"toBeEnabled":"toBeDisabled"}();`:`expect(${webEl}).${assertion==="verifyEnabled"?"toBeEnabled":"toBeDisabled"}();`;
+      }
+      else if(parsed.action==="screenshot")out=isCs?`${isPw?`await page.ScreenshotAsync(new() { Path = ${q(parsed.target||"screenshot.png")} });`:`((ITakesScreenshot)${drv}).GetScreenshot().SaveAsFile(${q(parsed.target||"screenshot.png")});`}`:isJava?`((TakesScreenshot)${drv}).getScreenshotAs(OutputType.FILE); // TODO: save screenshot to ${parsed.target||"screenshot.png"}`:isPy?`import pathlib; pathlib.Path(${q(parsed.target||"screenshot.png")}).write_bytes(${drv}.get_screenshot_as_png())`:isCy?`cy.screenshot(${q(parsed.target||"screenshot")});`:isPw?`await page.screenshot({ path: ${q(parsed.target||"screenshot.png")}, fullPage: true });`:`await page.screenshot({ path: ${q(parsed.target||"screenshot.png")} });`;
+      else if(parsed.action==="scroll")out=isCs?`${isPw?`await ${webEl}.ScrollIntoViewIfNeededAsync();`:`((IJavaScriptExecutor)${drv}).ExecuteScript("arguments[0].scrollIntoView(true);", ${webEl});`}`:isJava?`((JavascriptExecutor)${drv}).executeScript("arguments[0].scrollIntoView(true);", ${webEl});`:isPy?`${drv}.execute_script("arguments[0].scrollIntoView(true);", ${webEl})`:isCy?`${webEl}.scrollIntoView();`:isPw?`await ${webEl}.scrollIntoViewIfNeeded();`:`${webEl}.scrollIntoView();`;
+      else if(parsed.action==="upload")out=isCs?`${isPw?`await ${webEl}.SetInputFilesAsync(${q(val)});`:`${webEl}.SendKeys(${q(val)});`}`:isJava?`${webEl}.sendKeys(${q(val)});`:isPy?`${webEl}.send_keys(${q(val)})`:isCy?`${webEl}.selectFile(${q(val)});`:isPw?`await ${webEl}.setInputFiles(${q(val)});`:`${webEl}.selectFile(${q(val)});`;
+      else if(parsed.action==="highlight")out=isCs?`${isPw?`await ${webEl}.EvaluateAsync("el => el.style.outline = '3px solid orange'");`:`((IJavaScriptExecutor)${drv}).ExecuteScript("arguments[0].style.outline='3px solid orange';", ${webEl});`}`:isJava?`((JavascriptExecutor)${drv}).executeScript("arguments[0].style.outline='3px solid orange';", ${webEl});`:isPy?`${drv}.execute_script("arguments[0].style.outline='3px solid orange';", ${webEl})`:isCy?`${webEl}.then($el => $el.css("outline", "3px solid orange"));`:isPw?`await ${webEl}.evaluate(el => el.style.outline = "3px solid orange");`:`${webEl}.evaluate(el => el.style.outline = "3px solid orange");`;
+    }
+    if(!out){trace.status="error";trace.detail="Action recognized but no template exists for this target stack.";warnings.push(`Line ${s.line}: no template for ${parsed.action}.`);out=comment("TODO: could not convert — no template for this stack");}
+    if(settings.commentsToggle)add(pref+comment(`Step ${s.line}: ${clean}`),{step:stepIndex,kind:"comment"});
+    out.split("\n").forEach(line=>add(pref+line,{step:stepIndex,kind:customCall.custom?"custom":"code"}));
+    emitted++;
+   });
+   if(emitted===0)add(indent(level)+"// TODO: add test steps");
+ }
+ return {lines,mapping,warnings};
+}
+function generate(){
+ const settings=opts();const locs=parseLocators(settings.locators);const groups=splitTests(settings.steps);
+ // Validate combinations and unsupported tool-language pairs.
+ const errors=[];
+ if(settings.tool==="Cypress"&&settings.language!=="TypeScript")errors.push("Cypress requires TypeScript.");
+ if(settings.tool==="Cypress"&&settings.framework!=="Mocha/Jest")errors.push("Cypress uses its built-in Mocha-style test syntax.");
+ if(settings.tool==="Playwright"&&settings.language==="Java")errors.push("Playwright Java is not included in this generator's supported stacks.");
+ if(settings.tool==="Playwright"&&settings.language==="Python")errors.push("Playwright Python is not included in this generator's supported stacks.");
+ if(errors.length){$("inputAlert").hidden=false;$("inputAlert").textContent=errors.join(" ");return}
+ $("inputAlert").hidden=true;
+ const result=makeCode(groups,locs,settings);
+ generated=result;lastTrace=result.mapping;
+ renderOutput(result,settings,locs);
+ saveState();
+}
+function renderOutput(result,settings,locs){
+ $("emptyState").hidden=true;$("codeWrap").hidden=false;
+ $("code").innerHTML=result.lines.map((l,i)=>`<span class="code-line" data-line="${i}" ${l.step!==null?`data-step="${l.step}"`:""}><span class="ln">${String(i+1).padStart(2," ")}</span>${highlight(l.text)}</span>`).join("");
+ $("lineCount").textContent=`${result.lines.length} lines`;
+ const ext=settings.language==="C#"?".cs":settings.language==="Java"?".java":settings.language==="Python"?".py":".ts";
+ $("fileName").textContent=safeIdent(settings.className,"GeneratedTests")+ext;
+ $("outputSummary").textContent=`${settings.tool} · ${settings.language} · ${settings.framework} · ${result.mapping.length} parsed steps`;
+ $("copyCode").disabled=false;$("downloadCode").disabled=false;
+ $("traceCount").textContent=`· ${result.mapping.length} steps`;
+ const list=$("traceList");list.innerHTML="";
+ if(!result.mapping.length){list.innerHTML='<div class="subtle">No steps found. Add one action per line.</div>'}
+ result.mapping.forEach((m,i)=>{
+  const item=document.createElement("div");item.className="trace-item";item.dataset.step=i;
+  const status=m.status==="ok"?'<span class="status">Parsed</span>':m.status==="warn"?'<span class="status warn">Check locator</span>':'<span class="status err">TODO</span>';
+  item.innerHTML=`<div class="trace-num">${i+1}</div><div class="trace-main"><div class="trace-step">${escapeHtml(m.text)}</div><div class="trace-meta">${escapeHtml(m.action)}${m.target?" · target: "+escapeHtml(m.target):""}${m.detail?" · "+escapeHtml(m.detail):""}</div></div>${status}`;
+  item.addEventListener("click",()=>selectStep(i));list.appendChild(item);
+ });
+ if(result.warnings.length){const alert=document.createElement("div");alert.className="alert";alert.textContent=`${result.warnings.length} item(s) need review. Unsupported steps are emitted as TODO comments; missing locators are not guessed.`;list.prepend(alert)}
+ document.querySelectorAll(".code-line").forEach(line=>line.addEventListener("click",()=>{const s=line.dataset.step;if(s!==undefined)selectStep(Number(s),Number(line.dataset.line))}));
+}
+function highlight(s){
+ let x=escapeHtml(s);
+ if(/^\s*(\/\/|#|\/\*|\*)/.test(s))return `<span class="tok-comment">${x}</span>`;
+ x=x.replace(/(&quot;.*?&quot;|&#39;.*?&#39;|".*?"|'.*?')/g,'<span class="tok-string">$1</span>');
+ x=x.replace(/\b(await|async|public|private|class|void|def|return|new|using|import|from|assert|if|else|const|let|var|function|describe|it|test|expect|true|false|True|False|null|None)\b/g,'<span class="tok-key">$1</span>');
+ return x;
+}
+function selectStep(i,line){
+ document.querySelectorAll(".trace-item").forEach(el=>el.classList.toggle("selected",Number(el.dataset.step)===i));
+ document.querySelectorAll(".code-line").forEach(el=>el.classList.toggle("active",Number(el.dataset.step)===i));
+ const target=line!==undefined?document.querySelector(`.code-line[data-line="${line}"]`):document.querySelector(`.code-line[data-step="${i}"]`);
+ if(target)target.scrollIntoView({block:"nearest",behavior:"smooth"});
+}
+function getCode(){return generated?generated.lines.map(l=>l.text).join("\n"):""}
+$("generate").addEventListener("click",generate);$("generateBottom").addEventListener("click",generate);
+$("loadSample").addEventListener("click",()=>{ $("steps").value=samples.steps;$("locators").value=samples.locators;$("methods").value=samples.methods;setTab("steps");saveState();generate();toast("Sample loaded and generated")});
+$("startPlain").addEventListener("click",()=>{$("methods").value=samples.methods;saveState();toast("Default helper mappings loaded")});
+$("clearInputs").addEventListener("click",()=>{if(!confirm("Clear steps, locators, and helper mappings?"))return;$("steps").value="";$("locators").value="";$("methods").value="";saveState();toast("Inputs cleared")});
+$("copyCode").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(getCode());toast("Code copied to clipboard")}catch(e){const ta=document.createElement("textarea");ta.value=getCode();document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("Code copied") }});
+$("downloadCode").addEventListener("click",()=>{if(!generated)return;const settings=opts(),ext=settings.language==="C#"?"cs":settings.language==="Java"?"java":settings.language==="Python"?"py":"ts";const blob=new Blob([getCode()],{type:"text/plain;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safeIdent(settings.className,"GeneratedTests")+"."+ext;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href)});
+function downloadJson(){const blob=new Blob([JSON.stringify(readState(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="testforge-setup.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);toast("Setup exported as JSON")}
+function openJson(){const input=document.createElement("input");input.type="file";input.accept=".json,application/json";input.onchange=()=>{const file=input.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const s=JSON.parse(String(reader.result));applyState(s);saveState();toast("Setup imported");if(generated)generate()}catch(e){toast("Invalid setup JSON")}};reader.readAsText(file)};input.click()}
+$("saveSetupTop").addEventListener("click",downloadJson);$("loadSetupTop").addEventListener("click",openJson);
+$("readHelpers").addEventListener("click",()=>{$("helperDialog").classList.add("open");$("helperSource").focus()});
+$("closeDialog").addEventListener("click",()=>$("helperDialog").classList.remove("open"));
+$("helperDialog").addEventListener("click",e=>{if(e.target===$("helperDialog"))$("helperDialog").classList.remove("open")});
+$("detectMethods").addEventListener("click",()=>{
+ const src=$("helperSource").value;if(!src.trim()){$("helperResult").textContent="Paste helper source code first.";return}
+ const names=new Set();
+ const patterns=[/(?:public|private|protected|internal)?\s*(?:static\s+)?(?:async\s+)?(?:[\w<>\[\],.?]+\s+)+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)/g,/^\s*def\s+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)/gm,/^\s*(?:export\s+)?(?:async\s+)?([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?\(([^)]*)\)\s*=>/gm];
+ patterns.forEach(re=>{let m;while((m=re.exec(src))!==null){const n=m[1];if(!["if","for","while","switch","catch","constructor","return"].includes(n))names.add(n)}});
+ const actions=[["click",/click/i],["enterText",/enter|type|fill|input/i],["clear",/clear|empty/i],["select",/select|choose/i],["hover",/hover|moveTo/i],["doubleClick",/double.?click/i],["rightClick",/right.?click|context/i],["check",/check/i],["uncheck",/uncheck/i],["pressKey",/press.?key|send.?key/i]];
+ const existing=$("methods").value.trim();const draft=[];
+ actions.forEach(([key,re])=>{const found=[...names].find(n=>re.test(n));if(found&&!new RegExp("^\\s*"+key+"\\s*=","mi").test(existing))draft.push(`${key} = ${found}({el}${key==="enterText"||key==="select"?", {value}":""})`)});
+ $("methods").value=[existing,...draft].filter(Boolean).join("\n");saveState();
+ $("helperResult").textContent=`Detected ${names.size} likely method name(s); drafted ${draft.length} action mapping(s). Review method signatures and placeholders before generating.`;
+});
+restoreState();updateFrameworks(true);
+if($("tool").value==="Cypress"){$("language").value="TypeScript";$("language").disabled=true}
+})();
+</script>
+</body>
+</html>
